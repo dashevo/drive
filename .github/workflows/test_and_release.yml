@@ -163,7 +163,7 @@ jobs:
     name: Release Docker Image
     runs-on: ubuntu-20.04
     needs: test_suite
-    if: ${{ github.event_name == 'release' }}
+    # if: ${{ github.event_name == 'release' }}
     steps:
       - uses: actions/checkout@v2
 
@@ -227,10 +227,10 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: true
+          push: false
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-          # platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
 
       - name: Show Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
