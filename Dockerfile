@@ -1,12 +1,12 @@
 # syntax = docker/dockerfile:1.2
-FROM node:12-alpine as node_modules
+FROM node:16-alpine as node_modules
 
 RUN apk update && \
     apk --no-cache upgrade && \
     apk add --no-cache linux-headers \
                        git \
                        openssh-client \
-                       python \
+                       python3 \
                        alpine-sdk \
                        zeromq-dev
 
@@ -23,7 +23,7 @@ COPY package.json package-lock.json /
 
 RUN --mount=type=cache,target=/root/.npm --mount=type=cache,target=/root/.cache npm ci --production
 
-FROM node:12-alpine
+FROM node:16-alpine
 
 ARG NODE_ENV=production
 ENV NODE_ENV ${NODE_ENV}
